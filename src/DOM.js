@@ -1,8 +1,31 @@
 /* eslint-disable require-jsdoc */
 
 const todoList = document.querySelector('#todo-list');
+const addTask = document.createElement('button');
+addTask.textContent = 'Add';
 
-function createTodoElement() {
+function createTaskObject() {
+  // Create an object using whatever is inputted
+  const inputDiv = document.createElement('div');
+  const titleInput = document.createElement('input');
+  const notesInput = document.createElement('input'); // Not necessary
+  const dateInput = document.createElement('input'); // Not necessary
+  const timeInput = document.createElement('input'); // Not necessary
+  const buttonDiv = document.createElement('div');
+  const cancelTask = document.createElement('button');
+  buttonDiv.classList.add('button-div');
+  cancelTask.textContent = 'Cancel';
+  inputDiv.appendChild(titleInput);
+  inputDiv.appendChild(notesInput);
+  inputDiv.appendChild(dateInput);
+  inputDiv.appendChild(timeInput);
+  buttonDiv.appendChild(addTask);
+  buttonDiv.appendChild(cancelTask);
+  inputDiv.appendChild(buttonDiv);
+  todoList.appendChild(inputDiv);
+}
+
+function createTaskElement() {
   const li = document.createElement('li');
   // Add textContent
   const check = document.createElement('div');
@@ -25,7 +48,9 @@ function completeTask(event) {
 }
 
 export {
-  createTodoElement,
+  createTaskObject,
+  createTaskElement,
   completeTask,
   todoList,
+  addTask,
 };
