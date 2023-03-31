@@ -1,13 +1,15 @@
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskObject, createTaskElement, completeTask, todoList, addTask} from './DOM.js';
+import {createTaskElement, getFormData, completeTask, displayForm, taskForm, todoList} from './DOM.js';
 
 const todoFactory = (title, dueDate, dueTime, notes, checklist) => {
   return {title, dueDate, dueTime, notes, checklist};
 };
 
-const addTodoBtn = document.querySelector('#add-todo');
-addTodoBtn.addEventListener('click', createTaskObject);
+const createNewTaskBtn = document.querySelector('#add-todo');
+createNewTaskBtn.addEventListener('click', function() {
+  displayForm(taskForm);
+});
 
 todoList.addEventListener('click', function(event) {
   if (event.target.classList.contains('check-btn')) {
@@ -15,4 +17,5 @@ todoList.addEventListener('click', function(event) {
   }
 });
 
-addTask.addEventListener('click', createTaskElement);
+const addTaskInput = document.querySelector('#add-input-btn');
+addTaskInput.addEventListener('click', createTaskElement);
