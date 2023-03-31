@@ -1,4 +1,5 @@
 /* eslint-disable require-jsdoc */
+import {todoFactory} from './index.js';
 
 const todoList = document.querySelector('#todo-list');
 const taskForm = document.querySelector('#task-form');
@@ -13,18 +14,22 @@ function hideForm(form) {
 
 function getFormData(form) {
   const title = document.querySelector('#title').value;
-  console.log(title);
-  // createTaskElement(title);
+  const date = document.querySelector('#date').value;
+  const time = document.querySelector('#time').value;
+  const notes = document.querySelector('#notes').value;
+  const newTask = todoFactory(title, date, time, notes, false);
+  console.log(newTask);
+  return newTask;
 }
 
 function createTaskElement() {
   const li = document.createElement('li');
-  // Add textContent
-  getFormData(this.taskForm);
-  // li.textContent = title;
   const check = document.createElement('div');
   check.classList.add('check-btn', 'unchecked');
-  li.appendChild(check);
+  const formData = getFormData(taskForm);
+  li.textContent = formData.title;
+  li.prepend(check);
+  hideForm(taskForm);
   todoList.appendChild(li);
 }
 
