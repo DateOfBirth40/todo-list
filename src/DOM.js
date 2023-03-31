@@ -1,33 +1,27 @@
 /* eslint-disable require-jsdoc */
 
 const todoList = document.querySelector('#todo-list');
-const addTask = document.createElement('button');
-addTask.textContent = 'Add';
+const taskForm = document.querySelector('#task-form');
 
-function createTaskObject() {
-  // Create an object using whatever is inputted
-  const inputDiv = document.createElement('div');
-  const titleInput = document.createElement('input');
-  const notesInput = document.createElement('input'); // Not necessary
-  const dateInput = document.createElement('input'); // Not necessary
-  const timeInput = document.createElement('input'); // Not necessary
-  const buttonDiv = document.createElement('div');
-  const cancelTask = document.createElement('button');
-  buttonDiv.classList.add('button-div');
-  cancelTask.textContent = 'Cancel';
-  inputDiv.appendChild(titleInput);
-  inputDiv.appendChild(notesInput);
-  inputDiv.appendChild(dateInput);
-  inputDiv.appendChild(timeInput);
-  buttonDiv.appendChild(addTask);
-  buttonDiv.appendChild(cancelTask);
-  inputDiv.appendChild(buttonDiv);
-  todoList.appendChild(inputDiv);
+function displayForm(form) {
+  form.style.display = 'block';
+}
+
+function hideForm(form) {
+  form.style.display = 'none';
+}
+
+function getFormData(form) {
+  const title = document.querySelector('#title').value;
+  console.log(title);
+  // createTaskElement(title);
 }
 
 function createTaskElement() {
   const li = document.createElement('li');
   // Add textContent
+  getFormData(this.taskForm);
+  // li.textContent = title;
   const check = document.createElement('div');
   check.classList.add('check-btn', 'unchecked');
   li.appendChild(check);
@@ -48,9 +42,10 @@ function completeTask(event) {
 }
 
 export {
-  createTaskObject,
   createTaskElement,
+  getFormData,
   completeTask,
+  displayForm,
+  taskForm,
   todoList,
-  addTask,
 };
