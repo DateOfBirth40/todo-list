@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskElement, getFormData, completeTask, createCategory, displayElement, hideElement, taskForm, categoryForm, todoList} from './DOM.js';
+import {createTaskElement, completeTask, createCategory, displayBlock, displayGrid, hideElement, taskForm, categoryForm, todoList} from './DOM.js';
 
 const todoFactory = (title, category, dueDate, dueTime, notes, checklist) => {
   // const ;
@@ -11,11 +11,13 @@ hideElement(taskForm);
 hideElement(categoryForm);
 const createNewTaskBtn = document.querySelector('#add-todo');
 createNewTaskBtn.addEventListener('click', function() {
-  displayElement(taskForm);
+  hideElement(createNewTaskBtn);
+  displayGrid(taskForm);
 });
+
 const displayCategoryFormBtn = document.querySelector('#display-category-form');
 displayCategoryFormBtn.addEventListener('click', function() {
-  displayElement(categoryForm);
+  displayBlock(categoryForm);
   hideElement(displayCategoryFormBtn);
 });
 
@@ -28,13 +30,20 @@ todoList.addEventListener('click', function(event) {
 const addTaskInput = document.querySelector('#add-input-btn');
 addTaskInput.addEventListener('click', createTaskElement);
 
+const cancelTaskInput = document.querySelector('#cancel-input-btn');
+cancelTaskInput.addEventListener('click', function() {
+  hideElement(taskForm);
+  taskForm.reset();
+  displayBlock(createNewTaskBtn);
+});
+
 const categoryAddBtn = document.querySelector('#add-category-btn');
 categoryAddBtn.addEventListener('click', function() {
   createCategory();
-  displayElement(displayCategoryFormBtn);
+  displayBlock(displayCategoryFormBtn);
 });
 
 export {
   todoFactory,
-  displayCategoryFormBtn,
+  createNewTaskBtn,
 };
