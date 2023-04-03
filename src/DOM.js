@@ -43,27 +43,31 @@ function createTaskElement() {
   displayBlock(createNewTaskBtn);
 }
 
-function completeTask(event) {
+function completeTask(e) {
   // Add a class that styles the font to be greyed out
   // Send to bottom of list
-  const clickedBtn = event.target;
+  const clickedBtn = e.target;
   if (clickedBtn.classList.contains('unchecked')) {
     clickedBtn.classList.remove('unchecked');
     clickedBtn.classList.add('checked');
+    // this.checklist = true;
   } else if (clickedBtn.classList.contains('checked')) {
     clickedBtn.classList.add('unchecked');
     clickedBtn.classList.remove('checked');
+    // this.checklist = false;
   }
 }
 
 // Create a dropdown of the category list items that is prompted
 // when creating a new task
 
+const catArr = [];
 function createCategory() {
   const categoryList = document.querySelector('#category-list');
   const catInput = document.querySelector('#category').value;
   const newCat = document.createElement('li');
   newCat.textContent = catInput;
+  catArr.push(catInput); // Adds to an array that is used for dropdown menu in taskForm
   categoryList.appendChild(newCat);
   hideElement(categoryForm);
   categoryForm.reset();
@@ -72,20 +76,26 @@ function createCategory() {
 // Adds the active list title to the header
 // and assigns .active to the clicked element
 function addActiveListToHeader() {
-  const listItems = document.querySelectorAll('#sidebar li');
-  listItems.forEach((item) => {
-    item.addEventListener('click', function(e) {
+  const sidebar = document.querySelector('#sidebar');
+  sidebar.addEventListener('click', function(e) {
+    if (e.target.tagName === 'LI') {
       const activeListHeader = document.querySelector('#active-list-title');
-      activeListHeader.textContent = item.textContent;
+      activeListHeader.textContent = e.target.textContent;
+      const listItems = document.querySelectorAll('#sidebar li');
       listItems.forEach(function(item) {
         item.classList.remove('active');
       });
       e.target.classList.add('active');
-    });
+    }
   });
 }
 
 addActiveListToHeader();
+
+// If a list is clicked, only display that list's objects
+// When creating a new task object, check what the current list is and add that list as a property under 'category'
+// By default, make the category property blank
+// Sort through all objects and only display those with the corresponding category
 
 // Add an X button next to all list items to allow them to be deleted
 
