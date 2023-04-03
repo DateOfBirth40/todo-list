@@ -1,14 +1,22 @@
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskElement, getFormData, completeTask, displayForm, taskForm, todoList} from './DOM.js';
+import {createTaskElement, getFormData, completeTask, createCategory, displayElement, hideElement, taskForm, categoryForm, todoList} from './DOM.js';
 
-const todoFactory = (title, dueDate, dueTime, notes, checklist) => {
-  return {title, dueDate, dueTime, notes, checklist};
+const todoFactory = (title, category, dueDate, dueTime, notes, checklist) => {
+  // const ;
+  return {title, category, dueDate, dueTime, notes, checklist};
 };
 
+hideElement(taskForm);
+hideElement(categoryForm);
 const createNewTaskBtn = document.querySelector('#add-todo');
 createNewTaskBtn.addEventListener('click', function() {
-  displayForm(taskForm);
+  displayElement(taskForm);
+});
+const displayCategoryFormBtn = document.querySelector('#display-category-form');
+displayCategoryFormBtn.addEventListener('click', function() {
+  displayElement(categoryForm);
+  hideElement(displayCategoryFormBtn);
 });
 
 todoList.addEventListener('click', function(event) {
@@ -19,3 +27,14 @@ todoList.addEventListener('click', function(event) {
 
 const addTaskInput = document.querySelector('#add-input-btn');
 addTaskInput.addEventListener('click', createTaskElement);
+
+const categoryAddBtn = document.querySelector('#add-category-btn');
+categoryAddBtn.addEventListener('click', function() {
+  createCategory();
+  displayElement(displayCategoryFormBtn);
+});
+
+export {
+  todoFactory,
+  displayCategoryFormBtn,
+};
