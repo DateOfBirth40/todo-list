@@ -1,10 +1,10 @@
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskElement, completeTask, createCategory, displayBlock, displayGrid, hideElement, taskForm, categoryForm, todoList} from './DOM.js';
+import {createTaskElement, completeTask, createCategory, displayBlock, displayGrid, hideElement, taskForm, categoryForm, catInput, todoList} from './DOM.js';
 
-const todoFactory = (title, category, dueDate, dueTime, notes, checklist) => {
+const todoFactory = (title, category, dueDate, dueTime, notes, completed) => {
   // const ;
-  return {title, category, dueDate, dueTime, notes, checklist};
+  return {title, category, dueDate, dueTime, notes, completed};
 };
 
 hideElement(taskForm);
@@ -46,4 +46,5 @@ categoryAddBtn.addEventListener('click', function() {
 export {
   todoFactory,
   createNewTaskBtn,
+  displayCategoryFormBtn,
 };
