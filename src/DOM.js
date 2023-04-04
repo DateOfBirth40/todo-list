@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
-import {todoFactory, createNewTaskBtn, displayCategoryFormBtn} from './index.js';
+import {todoFactory, createNewTaskBtn} from './index.js';
 
 const todoList = document.querySelector('#todo-list');
 const taskForm = document.querySelector('#task-form');
@@ -20,7 +20,7 @@ function hideElement(element) {
 
 function getFormData(form) {
   const title = document.querySelector('#title').value;
-  const category = document.querySelector('#category').value;
+  const category = document.querySelector('#category-select').value;
   const date = document.querySelector('#date').value;
   const time = document.querySelector('#time').value;
   const notes = document.querySelector('#notes').value;
@@ -58,10 +58,13 @@ function completeTask(e) {
   }
 }
 
-// Create a dropdown of the category list items that is prompted
-// when creating a new task
-
 const catArr = [];
+for (const li of document.querySelectorAll('#category-list li')) {
+  catArr.push(li.textContent);
+}
+
+// Add functionality to disallow duplicate categories
+// Can affect createOptionList() due to the setting of duplicate id's
 function createCategory() {
   const categoryList = document.querySelector('#category-list');
   const catInput = document.querySelector('#category').value;
@@ -72,6 +75,18 @@ function createCategory() {
   hideElement(categoryForm);
   categoryForm.reset();
 }
+
+const categorySelect = document.querySelector('#category-select');
+function createOptionList(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    const selectOption = document.createElement('option');
+    selectOption.setAttribute('value', arr[i]);
+    selectOption.textContent = arr[i];
+    categorySelect.append(selectOption);
+  }
+}
+
+createOptionList(catArr);
 
 // Adds the active list title to the header
 // and assigns .active to the clicked element
