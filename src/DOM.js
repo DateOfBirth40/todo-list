@@ -6,16 +6,8 @@ const todoList = document.querySelector('#todo-list');
 const taskForm = document.querySelector('#task-form');
 const categoryForm = document.querySelector('#category-form');
 
-function displayBlock(element) {
-  element.style.display = 'block';
-}
-
-function displayGrid(element) {
-  element.style.display = 'grid';
-}
-
-function hideElement(element) {
-  element.style.display = 'none';
+function changeDisplay(element, type) {
+  element.style.display = type;
 }
 
 function getFormData(form) {
@@ -37,10 +29,10 @@ function createTaskElement() {
   const formData = getFormData(taskForm);
   li.textContent = formData.title;
   li.prepend(check);
-  hideElement(taskForm);
+  changeDisplay(taskForm, 'none');
   todoList.appendChild(li);
   taskForm.reset();
-  displayBlock(createNewTaskBtn);
+  changeDisplay(createNewTaskBtn, 'block');
 }
 
 function completeTask(e) {
@@ -58,25 +50,36 @@ function completeTask(e) {
   }
 }
 
-const catArr = [];
-for (const li of document.querySelectorAll('#category-list li')) {
-  catArr.push(li.textContent);
+const categorySelect = document.querySelector('#category-select');
+// Adds pre-existing categories to the select input
+function createOptionArray() {
+  const arr = [];
+  for (const li of document.querySelectorAll('#category-list li')) {
+    arr.push(li.textContent);
+  }
+  createOptionList(arr);
+  return arr;
 }
 
+createOptionArray();
 // Add functionality to disallow duplicate categories
 // Can affect createOptionList() due to the setting of duplicate id's
+// Add functionality to remove categories, and should be reflected on select input options
+// Adds to #category-list on sidebar, adds new list element to select input
 function createCategory() {
   const categoryList = document.querySelector('#category-list');
-  const catInput = document.querySelector('#category').value;
+  const catInput = document.querySelector('#category-input').value;
   const newCat = document.createElement('li');
   newCat.textContent = catInput;
-  catArr.push(catInput); // Adds to an array that is used for dropdown menu in taskForm
+  // const catArr = createOptionArray();
+  // newCatArr.push(catInput); // Adds to an array that is used for dropdown menu in taskForm
+  // console.log(newCatArr);
+  createOption(catInput);
   categoryList.appendChild(newCat);
-  hideElement(categoryForm);
+  changeDisplay(categoryForm, 'none');
   categoryForm.reset();
 }
 
-const categorySelect = document.querySelector('#category-select');
 function createOptionList(arr) {
   for (let i = 0; i < arr.length; i++) {
     const selectOption = document.createElement('option');
@@ -86,7 +89,16 @@ function createOptionList(arr) {
   }
 }
 
-createOptionList(catArr);
+// Consider reverting to an array that is read everytime a new category is added
+// For ex., it will check through entire array for a new category and only add those that are new
+function createOption(input) {
+  const selectOption = document.createElement('option');
+  selectOption.setAttribute('value', input);
+  selectOption.textContent = input;
+  categorySelect.append(selectOption);
+}
+
+// Create function that querySelectAll '#category-list li' and filters based on (item.category) === e
 
 // Adds the active list title to the header
 // and assigns .active to the clicked element
@@ -118,9 +130,7 @@ export {
   createTaskElement,
   completeTask,
   createCategory,
-  displayBlock,
-  displayGrid,
-  hideElement,
+  changeDisplay,
   taskForm,
   categoryForm,
   // catInput,
