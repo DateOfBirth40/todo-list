@@ -64,14 +64,17 @@ li img {
   margin-right: 8px;
 }
 
-#category-form {
+#category-div {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  align-items: center;
+  justify-content: center;
   gap: 10px;
 }
 
-#category-form input {
-  width: 100%;
+#category-div input {
+  width: 80%;
+  margin-bottom: 5px;
 }
 
 .active {
@@ -120,7 +123,6 @@ li img {
   background-color: var(--light-gray);
 }
 
-/* TASK FORM ITEMS */
 #task-form {
   display: none; /* normally this is grid; changed by one of the functions */
   grid-template-columns: repeat(2, 1fr);
@@ -128,13 +130,15 @@ li img {
   gap: 10px;
 }
 
-#task-form input, #task-form select {
+#category-input {
+  width: 80%;
+}
+
+#task-form input, #task-form select, #category-input {
   padding: 5px;
-  /* border-radius: 5px; */
-  border: 0;
-  border-bottom: 1px solid black;
+  border-radius: 5px;
+  border: 1px solid var(--light-black);
   background-color: var(--lighter-gray);
-  border-radius: 0 0 5px 0;
 }
 
 #title {
@@ -142,7 +146,7 @@ li img {
 }
 
 #date {
-  grid-area: 2 / 1 / 2 / -1;
+  grid-area: 2 / 1 / 2 / 1;
 }
 
 #time {
@@ -157,35 +161,43 @@ li img {
   grid-area: 4 / 1 / 4 / -1;
 }
 
-#button-div {
+#task-btn-div {
   display: flex;
   grid-area: 5 / 1 / 5 / -1;
   justify-content: space-between;
 }
 
-#button-div input {
+#category-btn-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#task-btn-div input, #category-btn-div input {
   width: 40%;
   height: 30px;
   text-align: center;
-}
-
-#button-div input {
   border: none;
   border-radius: 5px;
   font-weight: bold;
 }
 
-#button-div input:hover {
-  cursor: pointer;
-  filter: brightness(1.4);
-}
-
-#add-input-btn {
+#task-btn-div .add-btn,
+#category-btn-div .add-btn {
+  color: white;
   background-color: rgb(86, 200, 86);
 }
 
-#cancel-input-btn {
+#task-btn-div .cancel-btn,
+#category-btn-div .cancel-btn {
+  color: white;
   background-color: rgb(255, 75, 75);
+}
+
+#task-btn-div input:hover,
+#category-btn-div input:hover {
+  cursor: pointer;
+  color: black;
+  filter: brightness(1.4);
 }
 
 footer {
