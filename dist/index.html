@@ -14,43 +14,41 @@
         </header>
         <div id="sidebar">
             <ul id="sidebar-list">
-                <li id="home"><img src="../src/img/home.png">Home</li>
-                <li id="today"><img src="../src/img/today.png">Today</li>
-                <li id="week"><img src="../src/img/week.png">This Week</li>
-                <li id="completed"><img src="../src/img/completed.png">Completed</li>
+                <li id="home" class="sidebar-top active"><img src="../src/img/home.png">Home</li>
+                <li id="today" class="sidebar-top"><img src="../src/img/today.png">Today</li>
+                <li id="week" class="sidebar-top"><img src="../src/img/week.png">This Week</li>
+                <li id="completed" class="sidebar-top"><img src="../src/img/completed.png">Completed</li>
             </ul>
+            <h3>Categories</h3>
             <ul id="category-list">
-                <h3>Categories</h3>
                 <li>Work</li>
                 <li>School</li>
                 <li>Grocery List</li>
             </ul>
             <form name="category-form" action="" method="get" id="category-form">
-                <input type="text" name="category" id="category" placeholder="New Category">
-                <input type="button" id="add-category-btn" value="Add">
+                <input type="text" name="category-input" id="category-input" placeholder="New Category">
+                <div id="category-btn-div">
+                    <input type="button" id="add-category-btn" class="add-btn" value="Add">
+                    <input type="button" id="cancel-category-btn" class="cancel-btn" value="Cancel">
+                </div>
             </form>
             <button id="display-category-form">+ Add Category</button>
         </div>
         <div id="todo-div">
+            <h2 id="active-list-title">Home</h2>
             <ul id="todo-list">
-                <h2 class="active-list-title">Home</h2>
-                <!-- <li><div class="check-btn unchecked"></div>Item 1</li>
-                <li><div class="check-btn unchecked"></div>Item 2</li>
-                <li><div class="check-btn unchecked"></div>Item 3</li> -->
-                
             </ul>
             <form name="task-form" action="" method="get" id="task-form">
-                <!-- <label for="title">Title</label> -->
-                <input type="text" name="title" id="title" placeholder="Title"><br>
-                <!-- <label for="date">Date</label> -->
-                <input type="date" name="date" id="date"><br>
-                <!-- <label for="time">Time</label> -->
-                <input type="time" name="time" id="time"><br>
-                <!-- <label for="notes">Notes</label> -->
+                <input type="text" name="title" id="title" placeholder="Title">
+                <input type="date" name="date" id="date">
+                <input type="time" name="time" id="time">
+                <select name="category-select" id="category-select">
+                    <option value="" selected disabled>Category</option>
+                </select>
                 <input type="text" name="notes" id="notes" placeholder="Notes">
-                <div id="button-div">
-                    <input type="button" id="add-input-btn" value="Add">
-                    <input type="button" id="cancel-input-btn" value="Cancel">
+                <div id="task-btn-div">
+                    <input type="button" id="add-input-btn" class="add-btn" value="Add">
+                    <input type="button" id="cancel-input-btn" class="cancel-btn" value="Cancel">
                 </div>
             </form>
             <button id="add-todo">+ Create New Task</button>
