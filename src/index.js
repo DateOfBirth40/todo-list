@@ -1,24 +1,31 @@
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskElement, completeTask, createCategory, displayBlock, displayGrid, hideElement, taskForm, categoryForm, catInput, todoList} from './DOM.js';
+import {createTaskElement, completeTask, createCategory, changeDisplay, taskForm, categoryForm, catInput, todoList} from './DOM.js';
 
 const todoFactory = (title, category, dueDate, dueTime, notes, completed) => {
   // const ;
   return {title, category, dueDate, dueTime, notes, completed};
 };
 
-hideElement(taskForm);
-hideElement(categoryForm);
+changeDisplay(taskForm, 'none');
+changeDisplay(categoryForm, 'none');
 const createNewTaskBtn = document.querySelector('#add-todo');
 createNewTaskBtn.addEventListener('click', function() {
-  hideElement(createNewTaskBtn);
-  displayGrid(taskForm);
+  changeDisplay(createNewTaskBtn, 'none');
+  changeDisplay(taskForm, 'grid');
 });
 
 const displayCategoryFormBtn = document.querySelector('#display-category-form');
 displayCategoryFormBtn.addEventListener('click', function() {
-  displayBlock(categoryForm);
-  hideElement(displayCategoryFormBtn);
+  changeDisplay(categoryForm, 'block');
+  changeDisplay(displayCategoryFormBtn, 'none');
+});
+
+// const categoryListItems = document.querySelectorAll('#category-list li');
+const categoryAddBtn = document.querySelector('#add-category-btn');
+categoryAddBtn.addEventListener('click', function() {
+  createCategory();
+  changeDisplay(displayCategoryFormBtn, 'block');
 });
 
 todoList.addEventListener('click', function(event) {
@@ -32,15 +39,9 @@ addTaskInput.addEventListener('click', createTaskElement);
 
 const cancelTaskInput = document.querySelector('#cancel-input-btn');
 cancelTaskInput.addEventListener('click', function() {
-  hideElement(taskForm);
+  changeDisplay(taskForm, 'none');
   taskForm.reset();
-  displayBlock(createNewTaskBtn);
-});
-
-const categoryAddBtn = document.querySelector('#add-category-btn');
-categoryAddBtn.addEventListener('click', function() {
-  createCategory();
-  displayBlock(displayCategoryFormBtn);
+  changeDisplay(createNewTaskBtn, 'block');
 });
 
 export {
