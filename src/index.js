@@ -1,6 +1,7 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable max-len */
 import './style.css';
-import {createTaskElement, completeTask, createCategory, changeDisplay, taskForm, categoryForm, catInput, todoList} from './DOM.js';
+import {createTaskElement, completeTask, createCategory, changeDisplay, createOptionArray, taskForm, categoryForm, todoList} from './DOM.js';
 
 const todoFactory = (title, category, dueDate, dueTime, notes, completed) => {
   // const ;
@@ -25,6 +26,13 @@ displayCategoryFormBtn.addEventListener('click', function() {
 const categoryAddBtn = document.querySelector('#add-category-btn');
 categoryAddBtn.addEventListener('click', function() {
   createCategory();
+  createOptionArray();
+  changeDisplay(displayCategoryFormBtn, 'block');
+});
+
+const categoryCancelBtn = document.querySelector('#cancel-category-btn');
+categoryCancelBtn.addEventListener('click', function() {
+  changeDisplay(categoryForm, 'none');
   changeDisplay(displayCategoryFormBtn, 'block');
 });
 
