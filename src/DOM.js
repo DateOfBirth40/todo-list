@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 import {todoFactory, createNewTaskBtn} from './index.js';
+import {format} from 'date-fns';
 
 const todoList = document.querySelector('#todo-list');
 const taskForm = document.querySelector('#task-form');
@@ -23,11 +24,35 @@ function getFormData(form) {
 
 function createTaskElement() {
   // Turn these into a flex div that shows title, date, category, priority
+  const formData = getFormData(taskForm);
   const li = document.createElement('li');
+  const titleText = document.createElement('h3');
+  titleText.classList.add('task-title-text');
+  titleText.textContent = formData.title;
+  li.appendChild(titleText);
+
+  const dateText = document.createElement('p');
+  dateText.classList.add('task-date-text');
+  dateText.textContent = formData.dueDate;
+  li.appendChild(dateText);
+
+  const timeText = document.createElement('p');
+  timeText.classList.add('task-time-text');
+  timeText.textContent = formData.dueTime;
+  li.appendChild(timeText);
+
+  const catText = document.createElement('p');
+  catText.classList.add('task-cat-text');
+  catText.textContent = formData.category;
+  li.appendChild(catText);
+
+  const notesText = document.createElement('p');
+  notesText.classList.add('task-notes-text');
+  notesText.textContent = formData.notes;
+  li.appendChild(notesText);
+
   const check = document.createElement('div');
   check.classList.add('check-btn', 'unchecked');
-  const formData = getFormData(taskForm);
-  li.textContent = formData.title;
   li.prepend(check);
   changeDisplay(taskForm, 'none');
   todoList.appendChild(li);
@@ -38,27 +63,30 @@ function createTaskElement() {
 function completeTask(e) {
   // Add a class that styles the font to be greyed out
   // Send to bottom of list
+  // Find a way to get this to change the objects 'completed' prop. from false to true when clicked
   const clickedBtn = e.target;
   if (clickedBtn.classList.contains('unchecked')) {
     clickedBtn.classList.remove('unchecked');
     clickedBtn.classList.add('checked');
-    // this.checklist = true;
+    e.target.completed = true;
   } else if (clickedBtn.classList.contains('checked')) {
     clickedBtn.classList.add('unchecked');
     clickedBtn.classList.remove('checked');
-    // this.checklist = false;
+    e.target.completed = false;
   }
 }
 
 const categorySelect = document.querySelector('#category-select');
 // Adds pre-existing categories to the select input
+// This will run everytime a new category is added
 function createOptionArray() {
-  const arr = [];
+  const catArr = [];
   for (const li of document.querySelectorAll('#category-list li')) {
-    arr.push(li.textContent);
+    catArr.push(li.textContent);
   }
-  createOptionList(arr);
-  return arr;
+  createOptionList(catArr);
+  console.log(catArr);
+  return catArr;
 }
 
 createOptionArray();
@@ -70,6 +98,7 @@ function createCategory() {
   const categoryList = document.querySelector('#category-list');
   const catInput = document.querySelector('#category-input').value;
   const newCat = document.createElement('li');
+  newCat.classList.add('category-item');
   newCat.textContent = catInput;
   // const catArr = createOptionArray();
   // newCatArr.push(catInput); // Adds to an array that is used for dropdown menu in taskForm
@@ -80,7 +109,17 @@ function createCategory() {
   categoryForm.reset();
 }
 
+// Removes all options in category-select
+// Refreshes the list whenever a new category is added
+function removeOptions(select) {
+  let i; const L = select.options.length - 1;
+  for (i = L; i >= 1; i--) {
+    select.remove(i);
+  }
+}
+
 function createOptionList(arr) {
+  removeOptions(categorySelect);
   for (let i = 0; i < arr.length; i++) {
     const selectOption = document.createElement('option');
     selectOption.setAttribute('value', arr[i]);
@@ -102,14 +141,14 @@ function createOption(input) {
 
 // Adds the active list title to the header
 // and assigns .active to the clicked element
+const sidebar = document.querySelector('#sidebar');
+const sidebarItems = document.querySelectorAll('#sidebar li');
 function addActiveListToHeader() {
-  const sidebar = document.querySelector('#sidebar');
   sidebar.addEventListener('click', function(e) {
     if (e.target.tagName === 'LI') {
       const activeListHeader = document.querySelector('#active-list-title');
       activeListHeader.textContent = e.target.textContent;
-      const listItems = document.querySelectorAll('#sidebar li');
-      listItems.forEach(function(item) {
+      sidebarItems.forEach(function(item) {
         item.classList.remove('active');
       });
       e.target.classList.add('active');
@@ -118,6 +157,19 @@ function addActiveListToHeader() {
 }
 
 addActiveListToHeader();
+
+// function displayActiveList() {
+//   let filteredArr = [];
+//   sidebar.addEventListener('click', function(e) {
+//     if (e.target.matches('.category-item')) {
+//       filteredArr = catArr.filter((item) => item.category === e.target.textContent);
+//       todoList.innerHTML = '';
+//       for (const item of filteredArr) {
+//         const
+//       }
+//     }
+//   })
+// }
 
 // If a list is clicked, only display that list's objects
 // When creating a new task object, check what the current list is and add that list as a property under 'category'
@@ -131,8 +183,8 @@ export {
   completeTask,
   createCategory,
   changeDisplay,
+  createOptionArray,
   taskForm,
   categoryForm,
-  // catInput,
   todoList,
 };
