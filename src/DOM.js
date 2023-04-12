@@ -11,19 +11,23 @@ function changeDisplay(element, type) {
   element.style.display = type;
 }
 
+const taskArr = [];
 function getFormData(form) {
   const title = document.querySelector('#title').value;
   const category = document.querySelector('#category-select').value;
-  const date = document.querySelector('#date').value;
+  const dateInput = document.querySelector('#date').value;
+  let date;
+  dateInput ? date = format(new Date(dateInput), 'P') : date = '';
   const time = document.querySelector('#time').value;
   const notes = document.querySelector('#notes').value;
   const newTask = todoFactory(title, category, date, time, notes, false);
+  taskArr.push(newTask);
   console.log(newTask);
+  console.log(taskArr);
   return newTask;
 }
 
 function createTaskElement() {
-  // Turn these into a flex div that shows title, date, category, priority
   const formData = getFormData(taskForm);
   const li = document.createElement('li');
   const titleText = document.createElement('h3');
@@ -77,7 +81,7 @@ function completeTask(e) {
 }
 
 const categorySelect = document.querySelector('#category-select');
-// Adds pre-existing categories to the select input
+// Adds pre-existing categories to the select input option list
 // This will run everytime a new category is added
 function createOptionArray() {
   const catArr = [];
@@ -100,9 +104,6 @@ function createCategory() {
   const newCat = document.createElement('li');
   newCat.classList.add('category-item');
   newCat.textContent = catInput;
-  // const catArr = createOptionArray();
-  // newCatArr.push(catInput); // Adds to an array that is used for dropdown menu in taskForm
-  // console.log(newCatArr);
   createOption(catInput);
   categoryList.appendChild(newCat);
   changeDisplay(categoryForm, 'none');
@@ -141,6 +142,8 @@ function createOption(input) {
 
 // Adds the active list title to the header
 // and assigns .active to the clicked element
+// ISSUE
+// Currently allows multiple categories created thru DOM to be active at once
 const sidebar = document.querySelector('#sidebar');
 const sidebarItems = document.querySelectorAll('#sidebar li');
 function addActiveListToHeader() {
@@ -158,18 +161,19 @@ function addActiveListToHeader() {
 
 addActiveListToHeader();
 
-// function displayActiveList() {
-//   let filteredArr = [];
-//   sidebar.addEventListener('click', function(e) {
-//     if (e.target.matches('.category-item')) {
-//       filteredArr = catArr.filter((item) => item.category === e.target.textContent);
-//       todoList.innerHTML = '';
-//       for (const item of filteredArr) {
-//         const
-//       }
-//     }
-//   })
-// }
+// This function will display the active (clicked) category's tasks
+function displayActiveList() {
+  let filteredArr = [];
+  sidebar.addEventListener('click', function(e) {
+    if (e.target.matches('.category-item')) {
+      filteredArr = taskArr.filter((item) => item.category === e.target.textContent);
+      todoList.innerHTML = '';
+      for (const item of filteredArr) {
+        createTaskElement();
+      }
+    }
+  });
+}
 
 // If a list is clicked, only display that list's objects
 // When creating a new task object, check what the current list is and add that list as a property under 'category'
